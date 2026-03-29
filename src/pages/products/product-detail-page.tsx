@@ -1,12 +1,10 @@
 import { useParams, useNavigate } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
-import { Edit } from 'lucide-react';
 import { productsApi } from '../../api/products.api';
 import { PageHeader } from '../../components/shared/page-header';
 import { ProductStatusBadge } from '../../components/shared/status-badge';
 import { Card } from '../../components/ui/Card';
-import { Button } from '../../components/ui/Button';
 import { PRODUCT_CATEGORY_LABELS } from '../../lib/constants';
 import { formatCurrency } from '../../lib/utils';
 

@@ -24,7 +24,7 @@ export function ServiceOrderFormPage() {
   const queryClient = useQueryClient();
 
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
   });
 
   const mutation = useMutation({

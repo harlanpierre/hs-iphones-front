@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import {
   LayoutDashboard,
   Package,
@@ -8,12 +8,14 @@ import {
   ShoppingCart,
   Wrench,
   Hammer,
+  CreditCard,
   Smartphone,
+  UserCog,
   Menu,
   X,
 } from 'lucide-react';
 import { useAuth } from '../../contexts/auth-context';
-import { UserRole } from '../../types/auth.types';
+import type { UserRole } from '../../types/auth.types';
 
 interface NavItem {
   label: string;
@@ -26,10 +28,12 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Dashboard', path: '/dashboard', icon: <LayoutDashboard size={20} />, roles: ['ADMIN', 'VENDEDOR', 'TECNICO'] },
   { label: 'Produtos', path: '/produtos', icon: <Package size={20} />, roles: ['ADMIN', 'VENDEDOR', 'TECNICO'] },
   { label: 'Clientes', path: '/clientes', icon: <Users size={20} />, roles: ['ADMIN', 'VENDEDOR'] },
+  { label: 'Usuarios', path: '/usuarios', icon: <UserCog size={20} />, roles: ['ADMIN'] },
   { label: 'Fornecedores', path: '/fornecedores', icon: <Truck size={20} />, roles: ['ADMIN'] },
   { label: 'Vendas / PDV', path: '/vendas', icon: <ShoppingCart size={20} />, roles: ['ADMIN', 'VENDEDOR'] },
   { label: 'Assistencia (OS)', path: '/assistencia', icon: <Wrench size={20} />, roles: ['ADMIN', 'TECNICO'] },
   { label: 'Reparos Internos', path: '/reparos', icon: <Hammer size={20} />, roles: ['ADMIN', 'TECNICO'] },
+  { label: 'Assinatura', path: '/assinatura', icon: <CreditCard size={20} />, roles: ['ADMIN'] },
 ];
 
 const SidebarContainer = styled.aside<{ $open: boolean }>`

@@ -1,7 +1,11 @@
-import { createBrowserRouter, Navigate } from 'react-router';
+import { createBrowserRouter } from 'react-router';
 import { AppLayout } from '../components/layout/app-layout';
 import { PrivateRoute } from './private-route';
+import { LandingPage } from '../pages/landing/landing-page';
 import { LoginPage } from '../pages/login/login-page';
+import { RegisterPage } from '../pages/register/register-page';
+import { PlansPage } from '../pages/plans/plans-page';
+import { SubscriptionPage } from '../pages/subscription/subscription-page';
 import { DashboardPage } from '../pages/dashboard/dashboard-page';
 import { ProductsPage } from '../pages/products/products-page';
 import { ProductFormPage } from '../pages/products/product-form-page';
@@ -18,21 +22,46 @@ import { ServiceOrderFormPage } from '../pages/service-orders/service-order-form
 import { ServiceOrderDetailPage } from '../pages/service-orders/service-order-detail-page';
 import { RepairsPage } from '../pages/repairs/repairs-page';
 import { RepairFormPage } from '../pages/repairs/repair-form-page';
+import { UsersPage } from '../pages/users/users-page';
+import { UserFormPage } from '../pages/users/user-form-page';
+import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password-page';
+import { ResetPasswordPage } from '../pages/reset-password/reset-password-page';
 
 export const router = createBrowserRouter([
+  // Rotas publicas
+  {
+    path: '/',
+    element: <LandingPage />,
+  },
   {
     path: '/login',
     element: <LoginPage />,
   },
   {
-    path: '/',
+    path: '/register',
+    element: <RegisterPage />,
+  },
+  {
+    path: '/forgot-password',
+    element: <ForgotPasswordPage />,
+  },
+  {
+    path: '/reset-password',
+    element: <ResetPasswordPage />,
+  },
+  {
+    path: '/planos',
+    element: <PlansPage />,
+  },
+
+  // Rotas autenticadas
+  {
     element: (
       <PrivateRoute>
         <AppLayout />
       </PrivateRoute>
     ),
     children: [
-      { index: true, element: <Navigate to="/dashboard" replace /> },
       { path: 'dashboard', element: <DashboardPage /> },
 
       // Produtos
@@ -64,6 +93,14 @@ export const router = createBrowserRouter([
       // Reparos Internos
       { path: 'reparos', element: <PrivateRoute roles={['ADMIN', 'TECNICO']}><RepairsPage /></PrivateRoute> },
       { path: 'reparos/novo', element: <PrivateRoute roles={['ADMIN', 'TECNICO']}><RepairFormPage /></PrivateRoute> },
+
+      // Usuarios
+      { path: 'usuarios', element: <PrivateRoute roles={['ADMIN']}><UsersPage /></PrivateRoute> },
+      { path: 'usuarios/novo', element: <PrivateRoute roles={['ADMIN']}><UserFormPage /></PrivateRoute> },
+      { path: 'usuarios/:id/editar', element: <PrivateRoute roles={['ADMIN']}><UserFormPage /></PrivateRoute> },
+
+      // Assinatura
+      { path: 'assinatura', element: <PrivateRoute roles={['ADMIN']}><SubscriptionPage /></PrivateRoute> },
     ],
   },
 ]);

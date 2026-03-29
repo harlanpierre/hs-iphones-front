@@ -1,6 +1,6 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
-import { ErrorResponse } from '../types/common.types';
+import type { ErrorResponse } from '../types/common.types';
 
 const api = axios.create({
   baseURL: 'http://localhost:8080',
@@ -37,7 +37,7 @@ api.interceptors.response.use(
         const fieldMessages = errorData.fieldErrors.map((f) => f.message).join('\n');
         toast.error(fieldMessages);
       } else if (status === 403) {
-        toast.error('Acesso negado. Voce nao tem permissao para esta acao.');
+        toast.error(message);
       } else if (status >= 400 && status < 500) {
         toast.error(message);
       } else if (status >= 500) {

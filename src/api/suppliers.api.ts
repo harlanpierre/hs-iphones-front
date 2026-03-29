@@ -1,6 +1,6 @@
 import api from './axios';
-import { Page } from '../types/common.types';
-import { SupplierRequest, SupplierResponse } from '../types/supplier.types';
+import type { Page } from '../types/common.types';
+import type { SupplierRequest, SupplierResponse } from '../types/supplier.types';
 
 export const suppliersApi = {
   findAll: async (page = 0, size = 20, filter?: string): Promise<Page<SupplierResponse>> => {

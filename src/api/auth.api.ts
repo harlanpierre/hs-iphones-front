@@ -1,5 +1,5 @@
 import api from './axios';
-import { AuthResponse, LoginRequest, RegisterRequest } from '../types/auth.types';
+import type { AuthResponse, LoginRequest, RegisterRequest } from '../types/auth.types';
 
 export const authApi = {
   login: async (data: LoginRequest): Promise<AuthResponse> => {
@@ -10,5 +10,14 @@ export const authApi = {
   register: async (data: RegisterRequest): Promise<AuthResponse> => {
     const response = await api.post<AuthResponse>('/auth/register', data);
     return response.data;
+  },
+
+  forgotPassword: async (email: string): Promise<{ message: string }> => {
+    const response = await api.post<{ message: string }>('/auth/forgot-password', { email });
+    return response.data;
+  },
+
+  resetPassword: async (token: string, newPassword: string): Promise<void> => {
+    await api.post('/auth/reset-password', { token, newPassword });
   },
 };

@@ -1,6 +1,6 @@
 import api from './axios';
-import { Page } from '../types/common.types';
-import { PaymentRequest, SaleRequest, SaleResponse, SaleStatus } from '../types/sale.types';
+import type { Page } from '../types/common.types';
+import type { PaymentRequest, SaleRequest, SaleResponse, SaleStatus } from '../types/sale.types';
 
 interface SaleFilters {
   status?: SaleStatus;

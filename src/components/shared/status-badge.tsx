@@ -1,7 +1,7 @@
 import { Badge } from '../ui/Badge';
-import { ProductStatus } from '../../types/product.types';
-import { SaleStatus } from '../../types/sale.types';
-import { ServiceOrderStatus } from '../../types/service-order.types';
+import type { ProductStatus } from '../../types/product.types';
+import type { SaleStatus } from '../../types/sale.types';
+import type { ServiceOrderStatus } from '../../types/service-order.types';
 import {
   PRODUCT_STATUS_LABELS,
   SALE_STATUS_LABELS,

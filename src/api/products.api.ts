@@ -1,6 +1,6 @@
 import api from './axios';
-import { Page } from '../types/common.types';
-import { ProductCategory, ProductRequest, ProductResponse, ProductStatus } from '../types/product.types';
+import type { Page } from '../types/common.types';
+import type { ProductCategory, ProductRequest, ProductResponse, ProductStatus } from '../types/product.types';
 
 export const productsApi = {
   findAll: async (page = 0, size = 20): Promise<Page<ProductResponse>> => {

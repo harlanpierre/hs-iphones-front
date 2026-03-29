@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 import toast from 'react-hot-toast';
 import { serviceOrdersApi } from '../../api/service-orders.api';
-import { ServiceOrderStatus } from '../../types/service-order.types';
+import type { ServiceOrderStatus } from '../../types/service-order.types';
 import { PageHeader } from '../../components/shared/page-header';
 import { OSStatusBadge } from '../../components/shared/status-badge';
 import { Card, CardTitle } from '../../components/ui/Card';
@@ -12,7 +12,6 @@ import { Button } from '../../components/ui/Button';
 import { Input, Label, FormGroup } from '../../components/ui/Input';
 import { Modal } from '../../components/ui/Modal';
 import { Table, Thead, Tbody, Tr, Th, Td, TableContainer } from '../../components/ui/Table';
-import { Select } from '../../components/ui/Select';
 import { SERVICE_ORDER_STATUS_LABELS } from '../../lib/constants';
 import { formatCurrency, formatDateTime } from '../../lib/utils';
 

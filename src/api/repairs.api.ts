@@ -1,5 +1,5 @@
 import api from './axios';
-import { InternalRepairRequest, InternalRepairResponse } from '../types/repair.types';
+import type { InternalRepairRequest, InternalRepairResponse } from '../types/repair.types';
 
 export const repairsApi = {
   create: async (data: InternalRepairRequest): Promise<InternalRepairResponse> => {

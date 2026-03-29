@@ -1,5 +1,5 @@
 import api from './axios';
-import { AddressResponse } from '../types/client.types';
+import type { AddressResponse } from '../types/client.types';
 
 export const cepApi = {
   lookup: async (cep: string): Promise<AddressResponse> => {

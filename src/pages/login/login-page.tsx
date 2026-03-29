@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 import styled from 'styled-components';
 import { Smartphone } from 'lucide-react';
 import { useAuth } from '../../contexts/auth-context';
@@ -53,6 +53,39 @@ const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+const ForgotPasswordLink = styled.div`
+  text-align: right;
+  margin-top: 0.75rem;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+
+  a {
+    color: ${({ theme }) => theme.colors.primary};
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`;
+
+const RegisterLink = styled.div`
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: ${({ theme }) => theme.fontSizes.sm};
+  color: ${({ theme }) => theme.colors.textSecondary};
+
+  a {
+    color: ${({ theme }) => theme.colors.primary};
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
 export function LoginPage() {
@@ -124,7 +157,15 @@ export function LoginPage() {
           <Button type="submit" $fullWidth disabled={loading}>
             {loading ? 'Entrando...' : 'Entrar'}
           </Button>
+
+          <ForgotPasswordLink>
+            <Link to="/forgot-password">Esqueceu sua senha?</Link>
+          </ForgotPasswordLink>
         </form>
+
+        <RegisterLink>
+          <Link to="/register">Nao tem conta? Criar conta</Link>
+        </RegisterLink>
       </LoginCard>
     </Container>
   );

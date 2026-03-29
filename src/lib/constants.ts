@@ -1,7 +1,7 @@
-import { ProductCategory, ProductStatus } from '../types/product.types';
-import { SaleStatus, PaymentMethod } from '../types/sale.types';
-import { ServiceOrderStatus } from '../types/service-order.types';
-import { UserRole } from '../types/auth.types';
+import type { ProductCategory, ProductStatus } from '../types/product.types';
+import type { SaleStatus, PaymentMethod } from '../types/sale.types';
+import type { ServiceOrderStatus } from '../types/service-order.types';
+import type { UserRole } from '../types/auth.types';
 
 export const PRODUCT_CATEGORY_LABELS: Record<ProductCategory, string> = {
   CELULAR: 'Celular',

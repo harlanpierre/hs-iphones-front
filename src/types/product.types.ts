@@ -1,5 +1,5 @@
-import { ClientResponse } from './client.types';
-import { SupplierResponse } from './supplier.types';
+import type { ClientResponse } from './client.types';
+import type { SupplierResponse } from './supplier.types';
 
 export type ProductCategory = 'CELULAR' | 'ACESSORIO' | 'PECA' | 'OUTROS';
 

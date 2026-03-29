@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -19,7 +19,7 @@ const schema = z.object({
   name: z.string().min(1, 'Nome e obrigatorio.'),
   description: z.string().optional(),
   sku: z.string().optional(),
-  category: z.enum(['CELULAR', 'ACESSORIO', 'PECA', 'OUTROS'], { required_error: 'Categoria e obrigatoria.' }),
+  category: z.enum(['CELULAR', 'ACESSORIO', 'PECA', 'OUTROS'], { message: 'Categoria e obrigatoria.' }),
   purchasePrice: z.coerce.number().min(0, 'Preco de compra deve ser >= 0.'),
   salePrice: z.coerce.number().min(0.01, 'Preco de venda e obrigatorio.'),
   quantity: z.coerce.number().min(0, 'Quantidade deve ser >= 0.'),
@@ -65,7 +65,7 @@ export function ProductFormPage() {
   });
 
   const { register, handleSubmit, reset, watch, control, formState: { errors } } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(schema) as any,
     defaultValues: { imeis: [] },
   });
 

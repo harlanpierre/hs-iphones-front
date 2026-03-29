@@ -1,11 +1,13 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { authApi } from '../api/auth.api';
-import { AuthResponse, LoginRequest, UserRole } from '../types/auth.types';
+import type { AuthResponse, LoginRequest, UserRole } from '../types/auth.types';
 
 interface AuthUser {
   username: string;
   name: string;
   role: UserRole;
+  tenantId: number;
+  tenantName: string;
 }
 
 interface AuthContextData {
@@ -70,6 +72,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       username: response.username,
       name: response.name,
       role: response.role as UserRole,
+      tenantId: response.tenantId,
+      tenantName: response.tenantName,
     };
     localStorage.setItem('token', response.token);
     localStorage.setItem('user', JSON.stringify(authUser));

@@ -1,6 +1,6 @@
 import api from './axios';
-import { Page } from '../types/common.types';
-import { ServiceOrderPartRequest, ServiceOrderRequest, ServiceOrderResponse, ServiceOrderStatus } from '../types/service-order.types';
+import type { Page } from '../types/common.types';
+import type { ServiceOrderPartRequest, ServiceOrderRequest, ServiceOrderResponse, ServiceOrderStatus } from '../types/service-order.types';
 
 interface ServiceOrderFilters {
   status?: ServiceOrderStatus;

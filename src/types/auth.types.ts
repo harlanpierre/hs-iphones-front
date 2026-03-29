@@ -7,7 +7,9 @@ export interface RegisterRequest {
   username: string;
   password: string;
   name: string;
+  email: string;
   role: UserRole;
+  tenantName: string;
 }
 
 export interface AuthResponse {
@@ -15,6 +17,8 @@ export interface AuthResponse {
   username: string;
   name: string;
   role: string;
+  tenantId: number;
+  tenantName: string;
 }
 
 export type UserRole = 'ADMIN' | 'VENDEDOR' | 'TECNICO';
