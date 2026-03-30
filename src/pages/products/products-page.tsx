@@ -4,9 +4,12 @@ import styled from 'styled-components';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Edit, Trash2, Eye } from 'lucide-react';
 import { productsApi } from '../../api/products.api';
+import { reportsApi } from '../../api/reports.api';
 import type { ProductResponse, ProductCategory, ProductStatus } from '../../types/product.types';
+import { useAuth } from '../../contexts/auth-context';
 import { PageHeader } from '../../components/shared/page-header';
 import { DataTable, type Column } from '../../components/shared/data-table';
+import { ExportDropdown } from '../../components/shared/export-dropdown';
 import { ProductStatusBadge } from '../../components/shared/status-badge';
 import { ConfirmDialog } from '../../components/shared/confirm-dialog';
 import { Button } from '../../components/ui/Button';
@@ -30,10 +33,21 @@ const Actions = styled.div`
 export function ProductsPage() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const { hasRole } = useAuth();
   const [page, setPage] = useState(0);
   const [category, setCategory] = useState<ProductCategory | ''>('');
   const [status, setStatus] = useState<ProductStatus | ''>('');
   const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [exporting, setExporting] = useState(false);
+
+  const handleExport = async (format: 'pdf' | 'excel') => {
+    setExporting(true);
+    try {
+      await reportsApi.exportStock({ format, category: category || undefined });
+    } finally {
+      setExporting(false);
+    }
+  };
 
   const useFilter = !!category && !!status;
 
@@ -97,6 +111,9 @@ export function ProductsPage() {
             <option key={k} value={k}>{v}</option>
           ))}
         </Select>
+        {hasRole('ADMIN') && (
+          <ExportDropdown onExport={handleExport} loading={exporting} />
+        )}
       </FilterBar>
 
       <DataTable

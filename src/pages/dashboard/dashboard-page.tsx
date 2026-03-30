@@ -11,8 +11,11 @@ import {
   AlertTriangle,
   UserPlus,
 } from 'lucide-react';
-import { subMonths, format } from 'date-fns';
+import { subMonths, format, startOfMonth, endOfMonth } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { useAuth } from '../../contexts/auth-context';
+import { reportsApi } from '../../api/reports.api';
+import { ExportDropdown } from '../../components/shared/export-dropdown';
 import {
   BarChart,
   Bar,
@@ -298,10 +301,24 @@ function PieLabel(props: any) {
 export function DashboardPage() {
   const navigate = useNavigate();
   const theme = useTheme();
+  const { hasRole } = useAuth();
   const monthOptions = useMemo(() => getMonthOptions(), []);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [exporting, setExporting] = useState(false);
 
   const selected = monthOptions[selectedIndex];
+
+  const handleExport = async (fmt: 'pdf' | 'excel') => {
+    const refDate = new Date(selected.year, selected.month - 1, 1);
+    const dateFrom = format(startOfMonth(refDate), 'yyyy-MM-dd');
+    const dateTo = format(endOfMonth(refDate), 'yyyy-MM-dd');
+    setExporting(true);
+    try {
+      await reportsApi.exportFinancial({ format: fmt, dateFrom, dateTo });
+    } finally {
+      setExporting(false);
+    }
+  };
 
   const { data, isLoading } = useQuery({
     queryKey: ['dashboard', selected.month, selected.year],
@@ -359,6 +376,9 @@ export function DashboardPage() {
               </option>
             ))}
           </SelectStyled>
+          {hasRole('ADMIN') && (
+            <ExportDropdown onExport={handleExport} loading={exporting} />
+          )}
         </MonthSelector>
       </HeaderRow>
 

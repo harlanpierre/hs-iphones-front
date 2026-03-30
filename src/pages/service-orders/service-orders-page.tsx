@@ -3,12 +3,17 @@ import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import { useQuery } from '@tanstack/react-query';
 import { Eye } from 'lucide-react';
+import toast from 'react-hot-toast';
 import { serviceOrdersApi } from '../../api/service-orders.api';
+import { reportsApi } from '../../api/reports.api';
 import type { ServiceOrderResponse, ServiceOrderStatus } from '../../types/service-order.types';
+import { useAuth } from '../../contexts/auth-context';
 import { PageHeader } from '../../components/shared/page-header';
 import { DataTable, type Column } from '../../components/shared/data-table';
+import { ExportDropdown } from '../../components/shared/export-dropdown';
 import { OSStatusBadge } from '../../components/shared/status-badge';
 import { Button } from '../../components/ui/Button';
+import { Input } from '../../components/ui/Input';
 import { Select } from '../../components/ui/Select';
 import { SERVICE_ORDER_STATUS_LABELS } from '../../lib/constants';
 import { formatCurrency, formatDateTime } from '../../lib/utils';
@@ -22,8 +27,25 @@ const FilterBar = styled.div`
 
 export function ServiceOrdersPage() {
   const navigate = useNavigate();
+  const { hasRole } = useAuth();
   const [page, setPage] = useState(0);
   const [status, setStatus] = useState<ServiceOrderStatus | ''>('');
+  const [dateFrom, setDateFrom] = useState('');
+  const [dateTo, setDateTo] = useState('');
+  const [exporting, setExporting] = useState(false);
+
+  const handleExport = async (format: 'pdf' | 'excel') => {
+    if (!dateFrom || !dateTo) {
+      toast.error('Selecione as datas de inicio e fim para exportar.');
+      return;
+    }
+    setExporting(true);
+    try {
+      await reportsApi.exportServiceOrders({ format, dateFrom, dateTo, status: status || undefined });
+    } finally {
+      setExporting(false);
+    }
+  };
 
   const { data, isLoading } = useQuery({
     queryKey: ['service-orders', page, status],
@@ -60,6 +82,11 @@ export function ServiceOrdersPage() {
             <option key={k} value={k}>{v}</option>
           ))}
         </Select>
+        <Input type="date" value={dateFrom} onChange={(e) => { setDateFrom(e.target.value); setPage(0); }} style={{ maxWidth: 170 }} />
+        <Input type="date" value={dateTo} onChange={(e) => { setDateTo(e.target.value); setPage(0); }} style={{ maxWidth: 170 }} />
+        {hasRole('ADMIN') && (
+          <ExportDropdown onExport={handleExport} loading={exporting} />
+        )}
       </FilterBar>
 
       <DataTable
